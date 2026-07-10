@@ -11,7 +11,7 @@ function updateStatus() {
   status.textContent = checked + ' / ' + total + ' bought';
 
   if (checked === total) {
-    status.textContent = '✅ All items bought!';
+    status.textContent = 'All items bought!';
     status.style.color = 'green';
   } else {
     status.style.color = '#555';
