@@ -1,33 +1,19 @@
-var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-var status = document.getElementById("status");
-var total = checkboxes.length;
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const status = document.getElementById('status');
+const total = checkboxes.length;
 
-// first load saved checkboxes
-for (var i = 0; i < checkboxes.length; i++) {
-  var saved = localStorage.getItem(checkboxes[i].id);
-  if (saved === "true") {
-    checkboxes[i].checked = true;
-  }
-}
+checkboxes.forEach(cb => {
+  cb.addEventListener('change', updateStatus);
+});
 
-// count and show status
 function updateStatus() {
-  var bought = 0;
-  for (var i = 0; i < checkboxes.length; i++) {
-    if (checkboxes[i].checked === true) {
-      bought = bought + 1;
-    }
+  const checked = document.querySelectorAll('input:checked').length;
+  status.textContent = checked + ' / ' + total + ' bought';
+
+  if (checked === total) {
+    status.textContent = '✅ All items bought!';
+    status.style.color = 'green';
+  } else {
+    status.style.color = '#555';
   }
-  status.innerHTML = bought + " / " + total + " bought";
-}
-
-// run status on start
-updateStatus();
-
-// listen for changes
-for (var i = 0; i < checkboxes.length; i++) {
-  checkboxes[i].addEventListener("change", function () {
-    localStorage.setItem(this.id, this.checked);
-    updateStatus();
-  });
 }
